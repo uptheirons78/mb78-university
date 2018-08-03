@@ -15,6 +15,11 @@
 	//with this we tell wp what to do
 	//first arg: it is what type of instruction we are going to give wp
 	//second arg: it gives wp the name of function we are going to run (we create the function)
-	add_action('wp_enqueue_scripts', 'university_files'); 
+	add_action('wp_enqueue_scripts', 'university_files');
+	
+	function university_features() {
+		add_theme_support('title-tag');
+	}
+	add_action('after_setup_theme', 'university_features');
 
 ?>
