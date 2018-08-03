@@ -1,3 +1,5 @@
+<?php get_header(); ?>
+
 <h1><?php bloginfo('title'); ?></h1>
 <h1>This is a page not a post</h1>
 <!--WORDPRESS LOOP-->
@@ -8,3 +10,5 @@
   <hr>
 <?php endwhile; ?>
 <?php endif; ?>
+
+<?php get_footer(); ?>
