@@ -19,6 +19,10 @@
 	
 	function university_features() {
 		add_theme_support('title-tag');
+		//register custom menus
+		register_nav_menu('headerMenuLocation', 'Header Menu Location');
+		register_nav_menu('footerAMenuLocation', 'Footer A Menu Location');
+		register_nav_menu('footerBMenuLocation', 'Footer B Menu Location');
 	}
 	add_action('after_setup_theme', 'university_features');
 
