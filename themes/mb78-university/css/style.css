@@ -1,3 +1,16 @@
+/*
+Theme Name: MB78 University
+Author: Mauro Bono
+Description: A University or College Theme
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: mb78-university
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
 /* 3rd party packages */
 @import "normalize.css";
 @import "slick-carousel/slick/slick.css";

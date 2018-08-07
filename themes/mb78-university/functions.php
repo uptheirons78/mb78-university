@@ -25,5 +25,7 @@
 		register_nav_menu('footerBMenuLocation', 'Footer B Menu Location');
 	}
 	add_action('after_setup_theme', 'university_features');
+	
+	
 
 ?>
