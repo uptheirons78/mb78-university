@@ -3,17 +3,35 @@
 <div class="page-banner">
   <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg'); ?>);"></div>
   <div class="page-banner__content container container--narrow">
-    <h1 class="page-banner__title">All Events</h1>
+    <h1 class="page-banner__title">Our Past Events</h1>
     <div class="page-banner__intro">
-      <p>See what is going on the university</p>
+      <p>See what we did at the university</p>
     </div>
   </div>  
 </div>
 
 <div class="container container--narrow page-section">
-  
-  <?php if( have_posts() ) : ?>
-  <?php while( have_posts() ) : the_post() ?>
+  <?php
+  	//CREATE A CUSTOM QUERY FOR PAST EVENTS
+  	$today = date('Ymd'); //TODAY date in PHP
+    $pastEvents = new WP_Query(array(
+      'paged' => get_query_var('paged', 1),//we need it for pagination!!!!!
+      'post_type' => 'event',
+      'meta_key' => 'event_date',
+      'orderby' => 'meta_value_num', //this is how to order the custom query
+      'order' => 'ASC', //ASC = ascending or DESC = descending (default value)
+      'meta_query' => array( //this for filtering past events, they'll be escluded from home page events section
+        array(
+          'key' => 'event_date',
+          'compare' => '<',
+          'value' => $today,
+          'type' => 'numeric'
+        )  
+      )
+    )); 
+  ?>
+  <?php if( $pastEvents->have_posts() ) : ?>
+  <?php while( $pastEvents->have_posts() ) : $pastEvents->the_post() ?>
   
     <div class="event-summary">
       <a class="event-summary__date t-center" href="#">
@@ -33,10 +51,9 @@
   <?php endwhile; ?>
   <?php endif; ?>
   
-  <?php echo paginate_links(); ?>
-  
-  <hr class="section-break">
-  <p>Looking for our past events ? <a href="<?php echo site_url('/past-events') ?>">Check out past events archive.</a></p>
+  <?php echo paginate_links(array(
+  	'total' => $pastEvents->max_num_pages
+  )); ?>
   
 </div>
   

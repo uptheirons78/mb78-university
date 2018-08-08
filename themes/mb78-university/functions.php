@@ -26,6 +26,25 @@
 	}
 	add_action('after_setup_theme', 'university_features');
 	
-	
+	//QUERIES based on URL 
+	function university_adjust_queries($query) {
+		$today = date('Ymd');
+		//is_admin() return true if you are on admin dashboard, we don't want to modify dashboard behaviour
+		if( !is_admin() && is_post_type_archive('event') && $query->is_main_query() ) {
+			$query->set('meta_key', 'event_date');
+			$query->set('orderby', 'meta_value_num');
+			$query->set('order', 'ASC');
+			//next query filter past events. we don't want to show them in events archive page
+			$query->set('meta_query', array( 
+				array (
+                'key' => 'event_date',
+                'compare' => '>=',
+                'value' => $today,
+                'type' => 'numeric'
+              )  
+      ));
+		}
+	}
+	add_action('pre_get_posts', 'university_adjust_queries');
 
 ?>
