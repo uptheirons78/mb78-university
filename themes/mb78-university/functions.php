@@ -20,6 +20,9 @@
 	function university_features() {
 		add_theme_support('title-tag');
 		add_theme_support('post-thumbnails'); //featured images
+		//IMAGES
+		add_image_size('professorLandscape', 400, 260, true); //nickname, width, height, crop or not
+		add_image_size('professorPortrait', 480, 620, true); //nickname, width, height, crop or not
 		//register custom menus
 		register_nav_menu('headerMenuLocation', 'Header Menu Location');
 		register_nav_menu('footerAMenuLocation', 'Footer A Menu Location');
