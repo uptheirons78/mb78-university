@@ -90,6 +90,21 @@
 		    
 		 <?php endif; ?>
     
+    <?php wp_reset_postdata(); ?>
+    <?php $relatedCampuses = get_field('related_campus'); ?>
+    
+    <?php if ($relatedCampuses) : ?>
+      <?php echo '<hr class="section-break">'; ?>
+      <?php echo "<h2 class='headline headline--medium'>" . get_the_title() . " is available at these campuses:</h2>"; ?>
+      <ul class="min-list link-list">
+        <?php 
+          foreach($relatedCampuses as $campus) {
+        ?>
+          <li><a href="<?php echo get_the_permalink($campus); ?>"><?php echo get_the_title($campus); ?></a></li>
+        <?php  }
+        ?>
+      </ul>
+    <?php endif;?>
     
   </div>
 <?php endwhile; ?>

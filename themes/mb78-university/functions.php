@@ -40,6 +40,8 @@
 		//third arg: indicates if js file has or not dependencies
 		//fourth arg is about the version
 		//fifth arg, a boolean, is about you want or not to load js before or not the bottom of the body tag
+		//Google Maps
+		wp_enqueue_script('googleMap', '//maps.googleapis.com/maps/api/js?key=' . getenv('GMAPS'), NULL, '1.0', true);
 		//ATTENTION: only in development use microtime() to avoid caching. NEVER ON LIVE PRODUCTION
 		wp_enqueue_script('main-university-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, microtime(), true);
 		//wp_enqueue_style is used to load CSS, font-awesome, fonts
@@ -71,6 +73,10 @@
 		$today = date('Ymd');
 		//is_admin() return true if you are on admin dashboard, we don't want to modify dashboard behaviour
 		
+		if( !is_admin() && is_post_type_archive('campus') && $query->is_main_query() ) {
+			$query->set('posts_per_page', -1);
+		}		
+		
 		if( !is_admin() && is_post_type_archive('program') && $query->is_main_query() ) {
 			$query->set('orderby', 'title');
 			$query->set('order', 'ASC');
@@ -94,5 +100,38 @@
 		}
 	}
 	add_action('pre_get_posts', 'university_adjust_queries');
+	
+	//Add Google Maps API Key to ADVANCED CUSTOM FIELDS
+	function universityMapKey($api) {
+		$api['key'] = getenv('GMAPS'); //using an ENV VARIABLE
+		return $api;
+	}
+	add_filter('acf/fields/google_map/api', 'universityMapKey');
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 ?>

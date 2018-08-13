@@ -50,6 +50,23 @@
 			'menu_icon' => 'dashicons-welcome-learn-more', //dashboard icon
 			
 		));
+		
+		//CAMPUS POST TYPE
+		register_post_type('campus', array(
+			'supports' => array('title', 'editor', 'excerpt'),
+			'rewrite' => array('slug' => 'campuses'),
+			'has_archive' => true,
+			'public' => true, //visible for editors and viewers of the website
+			'labels' => array(
+				'name' => 'Campuses', //name	in dashboard
+				'add_new_item' => 'Add New Campus',
+				'edit_item' => 'Edit Campus',
+				'all_items' => 'All Campuses',
+				'singular_name' => 'Campus'
+			),
+			'menu_icon' => 'dashicons-location-alt', //dashboard icon
+			
+		));
 	}
 	add_action('init', 'university_post_types');
 
