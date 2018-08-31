@@ -48,6 +48,10 @@
 		wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
 		wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 		wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime());
+		//Useful to create a RELATIVE URL for live search results (made with JS and not PHP)
+		wp_localize_script('main-university-js', 'universityData', array(
+				'root_url' => get_site_url(),
+			));
 	}
 	//with this we tell wp what to do
 	//first arg: it is what type of instruction we are going to give wp
