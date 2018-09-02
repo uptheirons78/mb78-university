@@ -38,6 +38,7 @@
 		
 		//PROFESSOR POST TYPE
 		register_post_type('professor', array(
+			'show_in_rest' => true,
 			'supports' => array('title', 'editor', 'thumbnail'),
 			'public' => true, //visible for editors and viewers of the website
 			'labels' => array(

@@ -34,6 +34,20 @@
 
 
 <?php
+
+	//include a file for staying organize
+	require get_theme_file_path('/inc/search-route.php');
+	
+	// add customs endpoint for Wordpress Rest API
+	function university_custom_rest() {
+		//register_rest_field: 3 params - post type, field name, callback function to retrieve and add data to JSON
+		//it is possible to add as many fields as you want !
+		register_rest_field('post', 'authorName', [
+			'get_callback' => function() {return get_the_author();}	
+		]);	
+	}
+	
+	add_action('rest_api_init', 'university_custom_rest');
 	
 	function university_files() {
 		//wp_enqueue_script is used to load JS files
