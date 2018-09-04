@@ -51,6 +51,20 @@
 			}
 			
 			if(get_post_type() == 'program') {
+				$relatedCampuses = get_field('related_campus'); //containes all related campuses of a program
+				
+				//if there are related campuses
+				if ($relatedCampuses) {
+					//loop through them
+					foreach($relatedCampuses as $campus) {
+						//push them inside $results['campuses'] creating a title and a permalink key-value pair
+						array_push($results['campuses'], [
+							'title' => get_the_title($campus),	
+							'permalink' => get_the_permalink($campus)	
+						]);
+					}
+				}
+				
 				array_push($results['programs'], [
 					'title' => get_the_title(),
 					'permalink' => get_the_permalink(),
@@ -93,7 +107,7 @@
 			
 			
 			$programRelationshipQuery = new WP_Query([
-				'post_type' => 'professor',
+				'post_type' => ['professor', 'event'],
 				'meta_query' => $programsMetaQuery
 			]);
 			
@@ -108,11 +122,30 @@
 					]);
 				}
 				
+				if(get_post_type() == 'event') {
+					$eventDate = new DateTime( get_field('event_date') );
+					$description = null;
+					if(has_excerpt()) {
+			      $description = get_the_excerpt();
+			    } else {
+			      $description = wp_trim_words(get_the_content(), 18);
+			    }
+					
+					array_push($results['events'], [
+						'title' => get_the_title(),
+						'permalink' => get_the_permalink(),
+						'month' => $eventDate->format('M'),
+						'day' => $eventDate->format('d'),
+						'description' => $description
+					]);
+				}
+				
 			}
 			
 			// to avoid duplicates in the array created by the above queries, due to the presence of search term in the body of professors post type
 			// ex: search term "biology", a program, but the word is also in the description of a professor like "I love biology"
 			$results['professors'] = array_values(array_unique($results['professors'], SORT_REGULAR));
+			$results['events'] = array_values(array_unique($results['events'], SORT_REGULAR));
 			
 		}
 		

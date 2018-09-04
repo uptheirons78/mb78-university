@@ -125,7 +125,7 @@ class Search {
 		this.searchField.val('');
 		setTimeout( () => this.searchField.focus(), 301 ); //directly focus the input opening the search overlay
 		this.isOverlayOpen = true;
-		
+		return false; //it prevents clicking on search icon to open /search via <a> tags in header (it must do it only when js is disabled on user browsers)
 	}
 	
 	closeOverlay() {
