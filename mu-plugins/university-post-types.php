@@ -4,6 +4,8 @@
 	function university_post_types() {
 		//EVENT POST TYPE
 		register_post_type('event', array(
+			'capability_type' => 'event', //to add custom post type to Members "create new role"
+			'map_meta_cap' => true, //to add custom post type to Members "create new role"
 			'supports' => array('title', 'editor', 'excerpt'),
 			'rewrite' => array('slug' => 'events'),
 			'has_archive' => true,
@@ -54,6 +56,8 @@
 		
 		//CAMPUS POST TYPE
 		register_post_type('campus', array(
+			'capability_type' => 'campus',
+			'map_meta_cap' => true,
 			'supports' => array('title', 'editor', 'excerpt'),
 			'rewrite' => array('slug' => 'campuses'),
 			'has_archive' => true,

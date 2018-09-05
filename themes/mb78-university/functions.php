@@ -126,20 +126,52 @@
 	}
 	add_filter('acf/fields/google_map/api', 'universityMapKey');
 	
+	// Redirect subscriber accounts  out of admin dashboard and onto the home page
+	function redirectSubsToFrontend() {
+		
+		$ourCurrentUser = wp_get_current_user();
+		
+		if( count($ourCurrentUser->roles) == 1 && $ourCurrentUser->roles[0] == 'subscriber' ) {
+			
+			wp_redirect( site_url('/') );
+			exit;
+			
+		}
+	}
+	add_action('admin_init', 'redirectSubsToFrontend');
+	
+	// Remove admin bar when a simple subscriber account is logged in
+	function removeAdminBarForSubscribers() {
+		
+		$ourCurrentUser = wp_get_current_user();
+		
+		if( count($ourCurrentUser->roles) == 1 && $ourCurrentUser->roles[0] == 'subscriber' ) {
+			
+			show_admin_bar(false);
+			
+		}
+	}
+	add_action('wp_loaded', 'removeAdminBarForSubscribers');
+	
+	//CUSTOMIZE LOGIN SCREEN
+	
+	function ourHeaderUrl() {
+		return esc_url( site_url('/') );
+	}
+	add_filter('login_headerurl', 'ourHeaderUrl'); //change the url on login page icon hover (usually Wordpress.org);
 	
 	
+	function ourLoginCSS() {
+		wp_enqueue_style('university_main_styles', get_stylesheet_uri(), NULL, microtime());
+		wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+	}
+	add_action('login_enqueue_scripts', 'ourLoginCSS'); //add stylesheets also to login screen (and Google Fonts if you want)
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	function ourLoginTitle() {
+		return get_bloginfo('name');
+	}
+	add_filter('login_headertitle', 'ourLoginTitle'); //change Wordpress icon on login screen with the site title
 	
 	
 	
