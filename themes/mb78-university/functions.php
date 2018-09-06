@@ -65,6 +65,7 @@
 		//Useful to create a RELATIVE URL for live search results (made with JS and not PHP)
 		wp_localize_script('main-university-js', 'universityData', array(
 				'root_url' => get_site_url(),
+				'nonce' => wp_create_nonce('wp_rest') //it creates a randomly generated number for a user session
 			));
 	}
 	//with this we tell wp what to do
