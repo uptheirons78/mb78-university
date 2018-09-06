@@ -72,6 +72,23 @@
 			'menu_icon' => 'dashicons-location-alt', //dashboard icon
 			
 		));
+		
+		//NOTES POST TYPE
+		register_post_type('note', array(
+			'show_in_rest' => true, //make it visible in WP REST API
+			'supports' => array('title', 'editor'), //show these items in Create New Note page 
+			'public' => false, // !visible for editors and viewers of the website
+			'show_ui' => true, // visible in dashboard for the user
+			'labels' => array(
+				'name' => 'Notes', //name	in dashboard
+				'add_new_item' => 'Add New Note',
+				'edit_item' => 'Edit Note',
+				'all_items' => 'All Notes',
+				'singular_name' => 'Note'
+			),
+			'menu_icon' => 'dashicons-welcome-write-blog', //dashboard icon
+			
+		));
 	}
 	add_action('init', 'university_post_types');
 
