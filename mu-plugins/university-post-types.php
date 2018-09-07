@@ -75,6 +75,8 @@
 		
 		//NOTES POST TYPE
 		register_post_type('note', array(
+			'capability_type' => 'note', //give permissions to note post type
+			'map_meta_cap' => true, //allows to give permissions
 			'show_in_rest' => true, //make it visible in WP REST API
 			'supports' => array('title', 'editor'), //show these items in Create New Note page 
 			'public' => false, // !visible for editors and viewers of the website

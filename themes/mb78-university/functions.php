@@ -45,6 +45,13 @@
 		register_rest_field('post', 'authorName', [
 			'get_callback' => function() {return get_the_author();}	
 		]);	
+		
+		//add a field in rest api for counting how many notes a user published
+		register_rest_field('note', 'userNoteCount', [
+			'get_callback' => function() {
+				return count_user_posts(get_current_user_id(), 'note');
+			}	
+		]);	
 	}
 	
 	add_action('rest_api_init', 'university_custom_rest');
@@ -175,6 +182,35 @@
 	add_filter('login_headertitle', 'ourLoginTitle'); //change Wordpress icon on login screen with the site title
 	
 	
+	
+	
+	// Force Note Posts to be PRIVATE
+	// 10 is function priority, the lower the number the earlier it will run
+	// 2 is the number of paramenters for the function
+	add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
+	
+	function makeNotePrivate($data, $postarr) {
+			// if post type is NOTE
+			if($data['post_type'] == 'note') {
+				// only if current user has more than 4 NOTE POSTS and they are not trashed (!$postarr['ID'])),
+				// so they have an ID ...
+				if (count_user_posts(get_current_user_id(), 'note') > 4 && !$postarr['ID']) {
+					// 1. prevent him to post a new one
+					die("Reached Limit");
+				}
+				// 2. sanitize data both in title and body field to avoid html
+				$data['post_title'] = sanitize_text_field($data['post_title']); // avoid html in title
+				$data['post_content'] = sanitize_textarea_field($data['post_content']); // avoid html in body
+			}
+			
+			// if post type is NOTE and its status is not trash
+			if($data['post_type'] == 'note' && $data['post_status'] != 'trash') {
+				// 3. set the status to be PRIVATE
+				$data['post_status'] = 'private';
+				
+			}
+			return $data;
+	}
 	
 	
 	
