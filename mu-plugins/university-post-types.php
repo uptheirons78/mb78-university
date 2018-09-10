@@ -89,7 +89,21 @@
 				'singular_name' => 'Note'
 			),
 			'menu_icon' => 'dashicons-welcome-write-blog', //dashboard icon
-			
+		));
+		
+		//LIKES POST TYPE
+		register_post_type('like', array(
+			'supports' => array('title'), 
+			'public' => false,
+			'show_ui' => true, // visible in dashboard for the user
+			'labels' => array(
+				'name' => 'Likes', //name	in dashboard
+				'add_new_item' => 'Add New Like',
+				'edit_item' => 'Edit Like',
+				'all_items' => 'All Likes',
+				'singular_name' => 'Like'
+			),
+			'menu_icon' => 'dashicons-heart', //dashboard icon
 		));
 	}
 	add_action('init', 'university_post_types');
